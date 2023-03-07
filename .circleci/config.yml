@@ -6,8 +6,8 @@ jobs:
     steps:
       - checkout
       - run: pip install awscli
-      - run: $(aws ecr get-login --no-include-email --region us-west-2)
+      - run: $(aws ecr get-login --no-include-email --region us-east-1)
       - run: docker build -t my-ecr-repo .
-      - run: docker tag my-ecr-repo:latest aws_account_id.dkr.ecr.us-west-2.amazonaws.com/my-ecr-repo:latest
-      - run: docker push aws_account_id.dkr.ecr.us-west-2.amazonaws.com/my-ecr-repo:latest
+      - run: docker tag my-ecr-repo:latest 148774211651.dkr.ecr.us-east-1.amazonaws.com/mahira:latest
+      - run: docker push 148774211651.dkr.ecr.us-east-1.amazonaws.com/mahira:latest
 
