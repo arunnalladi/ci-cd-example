@@ -1,4 +1,7 @@
 version: 2
+# https://circleci.com/developer/orbs/orb/circleci/aws-ecr
+ aws-ecr: circleci/aws-ecr@8.2.1
+
 jobs:
   build:
     docker:
@@ -10,4 +13,14 @@ jobs:
       - run: docker build -t my-ecr-repo .
       - run: docker tag my-ecr-repo:latest 148774211651.dkr.ecr.us-east-1.amazonaws.com/mahira:latest
       - run: docker push 148774211651.dkr.ecr.us-east-1.amazonaws.com/mahira:latest
-
+      
+workflows:
+  pushimage:
+    jobs:
+      - build
+      #Envs: AWS_ACCESS_KEY, AWS_SECRET_ACCESS_KEY, AWS_REGION, AWS_ECR_ACCOUNT_URL
+      - aws-ecr/build-and-push-image:
+          repo: mahira
+            path: .
+              requires:
+                - build
